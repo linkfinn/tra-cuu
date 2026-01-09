@@ -111,14 +111,18 @@ else if (MSTTCGP === "0101360697") { // BKAV
 
 else if (["0100684378","0108212803"].includes(MSTTCGP)) { // VNPT
   // VNPT xăng dầu
-  if (["03401254649","2000109850","1800158559-020","04100259821"].includes(MSTNBan)) {
+  if (["03401254649",
+       "04100259821",
+       "1400103562",
+       "1800158559-020",
+       "2000109850"].includes(MSTNBan)) {
     add(`https://hoadon.petrolimex.com.vn/?strFkey=${MaTCHdon}`);
   } else {
     // VNPT thay đổi tên gợi nhớ
     const map = {
       "0302309845-048":"dienmaycholonvtu",
-      "0317860332":"google",
-      "0311028311":"vietceramics"
+      "0311028311":"vietceramics",
+      "0317860332":"google"
     };
     const sub = map[MSTNBan] || MSTNBan;
     add(`https://${sub}-tt78.vnpt-invoice.com.vn?strFkey=${MCCQT}`);
