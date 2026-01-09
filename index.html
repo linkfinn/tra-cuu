@@ -102,6 +102,7 @@ function parseXML(txt,name){
 if (MSTTCGP === "0101243150") { // Misa
   add(`https://www.meinvoice.vn/tra-cuu/?sc=${IDHDon1}`);
   add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=pdf&Code=${IDHDon1}`);
+  add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=xml&Code=${IDHDon1}`);
 } 
 
 else if (MSTTCGP === "0101360697") { // BKAV
@@ -124,7 +125,7 @@ else if (["0100684378","0108212803"].includes(MSTTCGP)) { // VNPT
   }
 } 
 
- else if(MSTTCGP==="0100109106"){
+ else if(MSTTCGP==="0100109106"){ // Viettel
   add(`https://vinvoice.viettel.vn/utilities/invoice-search?masothue=${MSTNBan}&matracuu=${MaTCHdon}`);
   add(`https://sinvoice.viettel.vn/tracuuhoadon/?sup=${MSTNBan}&reserv=${MaTCHdon}`);
  }
@@ -252,10 +253,11 @@ else if(MSTTCGP==="0104128565") { // FPT
 
 else if(MSTTCGP==="0100931299") { // BIDV
   add(`https://hoadon.bic.vn/Invoice/InvoicePrint.aspx?format_type=pdf&invoice_number=${SHDonV}&security_code=${MaTCHdon}`);
+  add(`https://hoadon.bic.vn/Invoice/InvoicePrint.aspx?format_type=xml&invoice_number=${SHDonV}&security_code=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0103930279") { // Naen
-  add(`https://hoadon78.nacencomm.vn/view.aspx?madv=${MSTNBan}&id=${MaTCHdon}&type=2`);
+  add(`https://hoadon78.nacencomm.vn/tracuuhd.aspx?chuoixacthuc=${MaTCHdon}`);
   add(`https://hoadon78.nacencomm.vn/view.aspx?madv=${MSTNBan}&id=${IDHDon3}&type=2`);
   }
 
@@ -296,6 +298,66 @@ else if(MSTTCGP==="0101352495") { // VNIS
   add(`https://tracuu.v50.vninvoice.vn/?mst=${MSTNBan}&key=${MaTCHdon}`);
   }
 
+else if(MSTTCGP==="0103019524") { // VNAirline
+  add(`https://einvoice.vietnamairlines.com/?mst=${MSTNBan}&key=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0102325399") { // Vietjet
+  add(`http://einvoice.vietjetair.com/Invoice/Search?code=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0101289966") { // Nhan hoa
+  add(`https://tracuu.e-hoadon.cloud/?BenBanMaDonVi=${MSTNBan}&MaTraCuuHoaDon=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0302712571") { // Mat Bao
+  add(`https://matbao.in/tra-cuu-hoa-don/?ma-tra-cuu=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0101925883") { // CMC
+  add(`http://tracuu.cinvoice.vn/?soC=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0102331762") { // VNISC
+  add(`https://invoice.abcsys.vn/Invoice/Search/?txtSoHoaDon=${MaTCHdon}`);
+  add(`https://invoice.abcsys.vn/Invoice/ViewPDF?InvoiceNumber=${MHSo}`);
+  add(`https://invoice.abcsys.vn/Invoice/DownloadXML?InvoiceNumber=${MHSo}`);
+  }
+
+else if(MSTTCGP==="0302431595") { // P.A
+  add(`https://hoadon.pavietnam.vn/?OrderID=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0315382923") { // SES
+  add(`http://hoadon78.sesgroup.vn/hddt/tracuuhd?kh-mst=${MSTNMua}&shdon=${SHDonV}&secure-key=${MaTCHdon}`);
+  add(`${LinkTCHdon}/hddt/tracuuhd?kh-mst=${MSTNMua}&shdon=${SHDonV}&secure-key=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0305142231") { // Rosy
+  add(`https://einv.rosysoft.vn:8386/RSeInvoiceDetail/ViewHtml?taxcode=${MSTNBan}&id=${MaTCHdon}`);
+  add(`https://einv.rosysoft.vn:8386/RSeInvoiceSearch?TaxCode=${MSTNBan}`);
+  add(`https://einv.rosysoft.vn:8386/RSeInvoiceSearch?TaxCode=${MSTNBan}&InvSerial=${KHMSHDon}${KHHDon}&InvNo=${SHDonV}&Total=${TgTTTBSo}`);
+  }
+
+else if(MSTTCGP==="0108516079") { // 3A
+  add(`http://hddt.3asoft.vn/Home/Search?mst=${MSTNBan}&shd=${SHDonV}&mtk=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0301448733") { // Lac Viet
+  add(`hhttps://accnet.vn/hoa-don-dien-tu?Code=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0104908371") { // ACMAN
+  add(`https://www.hoadondientu.acman.vn/tra-cuu/hoa-don.html?MaDonViPhatHanh=${MSTNBan}&?MaTraCuuHoaDon=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0104614692") { // IDOC
+  add(`https://hoadontvan.com/TraCuu?invoiceCode=${MaTCHdon}`);
+  }
+
+else if(MSTTCGP==="0106777621") { // NDTV
+  add(`https://hoadontvan.com/TraCuu?invoiceCode=${MaTCHdon}`);
+  }
 
 
  let html=`<div class="block"><b>File:</b> ${name}<br><br>
