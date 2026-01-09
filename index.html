@@ -58,8 +58,13 @@ function parseXML(txt,name){
 
  const KHMSHDon=g("KHMSHDon"),KHHDon=g("KHHDon"),SHDon=g("SHDon");
  const SHDonV=SHDon.replace(/^0+/,"");
- const NLap=g("NLap"),MHSo=g("MHSo"),MSTTCGP=g("MSTTCGP");
+ const NLap=g("NLap"),MHSo=g("MHSo");
  const MCCQT=g("MCCQT"),MTDTChieu=g("MTDTChieu"),TgTTTBSo=g("TgTTTBSo");
+ let MSTTCGP = g("MSTTCGP");
+ // Hóa đơn không có thẻ MSTTCGP thì đưa vào nhóm VNPT
+ if (!MSTTCGP) {
+  MSTTCGP = "VNPT_BACK";
+ }
 
  const NBan=xml.querySelector("NDHDon > NBan");
  const TenNBan=c(NBan,"Ten"),MSTNBan=c(NBan,"MST");
@@ -109,7 +114,7 @@ else if (MSTTCGP === "0101360697") { // BKAV
   add(`https://van.ehoadon.vn/Lookup?InvoiceGUID=${IDHDon1}`);
 } 
 
-else if (["0100684378","0108212803"].includes(MSTTCGP)) { // VNPT
+else if (MSTTCGP === "VNPT_BACK" ||["0100684378","0108212803"].includes(MSTTCGP)) { // VNPT
   // VNPT xăng dầu
   if (["03401254649",
        "04100259821",
