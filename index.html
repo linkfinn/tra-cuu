@@ -105,6 +105,7 @@ function parseXML(txt,name){
  const add=l=>links.push(l);
 
 if (MSTTCGP === "0101243150") { // Misa
+  add(`Mã tra cứu: ${IDHDon1}`);
   add(`https://www.meinvoice.vn/tra-cuu/?sc=${IDHDon1}`);
   add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=pdf&Code=${IDHDon1}`);
   add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=xml&Code=${IDHDon1}`);
@@ -381,7 +382,6 @@ MST - Tên người bán: ${MSTNBan} - ${TenNBan}<br>
 Mã CQT: ${MCCQT}<br><br>
 <b>Đường dẫn tra cứu hóa đơn:</b><br>`;
 
-
  if(!links.length){
   html+=`Chưa có thông tin tra cứu hóa đơn của nhà cung cấp mã số thuế ${MSTTCGP}`;
   if(MSTTCGP && !MaTCHdon) html+=`<br>Không tồn tại mã tra cứu trong file XML`;
@@ -398,4 +398,3 @@ Mã CQT: ${MCCQT}<br><br>
 
 </body>
 </html>
-
