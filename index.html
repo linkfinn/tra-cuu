@@ -122,6 +122,7 @@ else if (["0100684378","0108212803"].includes(MSTTCGP)) { // VNPT
     const map = {
       "0302309845-048":"dienmaycholonvtu",
       "0311028311":"vietceramics",
+      "0315679836":"tinogroup"
       "0317860332":"google"
     };
     const sub = map[MSTNBan] || MSTNBan;
@@ -138,8 +139,8 @@ else if(MSTTCGP==="0100686209") { // Mobi
   }
 
 else if(MSTTCGP==="0101300842") { // Thái Sơn
-  add(`https://einvoice.vn/tra-cuu&MaNhanHoaDon=${MaTCHdon}`);
-  add(`https://tracuutvan.einvoice.com.vn/&MaNhanHoaDon=${MaTCHdon}`);
+  add(`https://einvoice.vn/tra-cuu?MaDV=${MSTNBan}&MaNhanHoaDon=${MaTCHdon}`);
+  add(`https://tracuutvan.einvoice.com.vn/?MaDV=${MSTNBan}&MaNhanHoaDon=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0105987432") { // Easy
