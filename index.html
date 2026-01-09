@@ -122,6 +122,7 @@ else if (MSTTCGP === "VNPT_BACK" ||["0100684378","0108212803"].includes(MSTTCGP)
        "1400103562",
        "1800158559-020",
        "2000109850"].includes(MSTNBan)) {
+    add(`Mã tra cứu: ${MaTCHdon}`);
     add(`https://hoadon.petrolimex.com.vn/?strFkey=${MaTCHdon}`);
   } else {
     // VNPT thay đổi tên gợi nhớ
@@ -133,11 +134,13 @@ else if (MSTTCGP === "VNPT_BACK" ||["0100684378","0108212803"].includes(MSTTCGP)
       "2200730800":"cayxangtuxe"
     };
     const sub = map[MSTNBan] || MSTNBan;
+    add(`Mã tra cứu: ${MCCQT}`);
     add(`https://${sub}-tt78.vnpt-invoice.com.vn?strFkey=${MCCQT}`);
   }
 } 
 
  else if(MSTTCGP==="0100109106"){ // Viettel
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://vinvoice.viettel.vn/utilities/invoice-search?masothue=${MSTNBan}&matracuu=${MaTCHdon}`);
   add(`https://sinvoice.viettel.vn/tracuuhoadon/?sup=${MSTNBan}&reserv=${MaTCHdon}`);
  }
@@ -386,7 +389,13 @@ Mã CQT: ${MCCQT}<br><br>
   html+=`Chưa có thông tin tra cứu hóa đơn của nhà cung cấp mã số thuế ${MSTTCGP}`;
   if(MSTTCGP && !MaTCHdon) html+=`<br>Không tồn tại mã tra cứu trong file XML`;
  } else {
-  links.forEach(l=>html+=`- <a href="${l}" target="_blank">${l}</a><br>`);
+  links.forEach(l => {
+  if (l.startsWith("http")) {
+    html += `- <a href="${l}" target="_blank">${l}</a><br>`;
+  } else {
+    html += `<b>${l}</b><br>`;
+  }
+ });
   if(!MaTCHdon && !["0101243150","0101360697"].includes(MSTTCGP))
   html+=`<br>Không tồn tại mã tra cứu trong file XML`;
  }
