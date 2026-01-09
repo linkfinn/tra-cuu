@@ -149,20 +149,24 @@ else if(MSTTCGP==="0100686209") { // Mobi
   }
 
 else if(MSTTCGP==="0101300842") { // Thái Sơn
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://einvoice.vn/tra-cuu?MaDV=${MSTNBan}&MaNhanHoaDon=${MaTCHdon}`);
   add(`https://tracuutvan.einvoice.com.vn/?MaDV=${MSTNBan}&MaNhanHoaDon=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0105987432") { // Easy
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`${LinkTCHdon}/Search/?Fkey=${MaTCHdon}`);
   add(`https://tracuu.easyinvoice.vn/Search/?TaxCode=${MSTNBan}&Fkey=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0315298333") { // TCT
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://www.tctinvoice.com/?matracuu=${MaTCHdon}`);
   }
 
 else if(["0311622035","0315194912","0303211948","0315191291"].includes(MSTTCGP)) { // EVAT
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://tvl.evat.vn/bill?cmpn_key=${MSTNBan}&private_code=${MaTCHdon}`);
   add(`http://ttl.evat.vn/bill?cmpn_key=${MSTNBan}&private_code=${MaTCHdon}`);
   add(`http://vlc.evat.vn/bill?cmpn_key=${MSTNBan}&private_code=${MaTCHdon}`);
@@ -170,20 +174,24 @@ else if(["0311622035","0315194912","0303211948","0315191291"].includes(MSTTCGP))
   }
 
 else if(["0306731335","0314420012"].includes(MSTTCGP)) { // TGDD
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://hddt.thegioididong.com/?billNum=${SHDonV}&phone=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0105232093") { // Cyber
+  add(`Mã tra cứu: ${IDHDon2}`);
   add(`http://tracuu.cyberbill.vn/#/tracuuhoadon/thongtinchung?mstdoanhnghiep=${MSTNBan}&masobimat=${IDHDon2}&loaitracuu=1`);
   add(`http://tracuuhoadon.cyberbill.vn/#/tracuuhoadon/thongtinchung?mstdoanhnghiep=${MSTNBan}&masobimat=${IDHDon2}&loaitracuu=1`);
   }
 
 else if(["0314743623","0314209362"].includes(MSTTCGP)) { // Vĩnh Hy
+  add(`Mã tra cứu: xem file pdf`);
   add(`https://ehoadondientu.com/Account/GenerateFile.aspx?r=ct_${IDHDon4}&type=pdf`);
   add(`https://hoadondientuvat.com/Account/GenerateFile.aspx?r=ct_${IDHDon4}&type=pdf`);
   }
 
 else if(MSTTCGP==="0311942758") { // Ngô Gia Phát 
+  add(`Mã tra cứu: xem file pdf`);
   add(`https://tracuuonline78.ngogiaphat.vn/InovicePdf.aspx?id=${IDHDon2}`);
   }
 
@@ -192,48 +200,59 @@ else if(MSTTCGP==="0306784030") { // CNKN
   }
 
 else if(["0106026495","0106026495-001","0100687474"].includes(MSTTCGP)) { // Minvoice 
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuuhoadon.minvoice.com.vn/api/Search/SearchInvoice?masothue=${MSTNBan}&sobaomat=${MaTCHdon}&type=PDF&inchuyendoi=false`);
   }
 
 else if(MSTTCGP==="0108971656") { // MSinvoice
+  add(`Mã tra cứu: ${MCCQT}`);
   add(`https://tracuu.myinvoice.vn/erp/rest/s1//iam-entry/invoices/${MCCQT}/pdf`);
   }
 
 else if(MSTTCGP==="0109282176") { // VINinvoice
+  add(`Mã tra cứu: ${MCCQT}`);
   add(`https://tracuu.vininvoice.vn/erp/rest/s1/iam-entry/invoices/${MCCQT}/pdf?v=0`);
   }
 
 else if(MSTTCGP==="0105937449") { // Newinvoice
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://newinvoice.com.vn/tra-cuu/?search_id=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0312303803") { // Wintech
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuu.wininvoice.vn/bill?cmpn_key=${MSTNBan}&private_code=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0310768095") { // AVSE
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://hoadondientu.link/TraCuuTT78?ma_so_thue=${MSTNBan}&ma_tra_cuu=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0309612872") { // Smartsign
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuuhd.smartsign.com.vn/HDDT/?code=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0309478306") { // TS24
+  add(`Mã tra cứu: ${MCCQT}`);
   add(`https://tracuu.xuathoadon.vn/invoice/1/${MCCQT}`);
   add(`https://tracuu.xuathoadon.vn/invoice/1/${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0107500414") { // VETC
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuuhoadon.vetc.com.vn/p/${MaTCHdon}`);
   add(`https://tracuuhoadon.vetc.com.vn/download/${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0304789925") { // CNBT
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://hoadon.capnuocbenthanh.com/?Dbo=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0101010702") { // Thăng Long
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`${LinkTCHdon}/?matracuu=${MaTCHdon}`);
   }
 
@@ -243,6 +262,7 @@ else if(MSTTCGP==="0300555450") { // XDII
   }
 
 else if(MSTTCGP==="0305795054") { // PVOil
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://hoadon.pvoil.vn/?TT78=true&key=${MaTCHdon}`);
   }
 
@@ -251,6 +271,7 @@ else if(MSTTCGP==="0100100079-010") { // EVN
   }
 
 else if(MSTTCGP==="0100727825") { // Fast
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://einvoice.fast.com.vn/?c=${MaTCHdon}`);
   }
 
@@ -259,6 +280,7 @@ else if(MSTTCGP==="0101162173") { // Asia
   }
 
 else if(MSTTCGP==="0313963672") { // KKVat
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuuhoadon.kkvat.com.vn/?lg_username=${MSTNMua}&lg_secure=${MaTCHdon}`);
   }
 
@@ -272,105 +294,129 @@ else if(MSTTCGP==="0100931299") { // BIDV
   }
 
 else if(MSTTCGP==="0103930279") { // Naen
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://hoadon78.nacencomm.vn/tracuuhd.aspx?chuoixacthuc=${MaTCHdon}`);
   add(`https://hoadon78.nacencomm.vn/view.aspx?madv=${MSTNBan}&id=${IDHDon3}&type=2`);
   }
 
 else if(MSTTCGP==="0311928954") { // Vietinfo
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuuhoadon.vietinfo.tech/?MaTraCuu=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0313906508") { // Nguyen Minh
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://www.nguyenminhvat.vn/?matracuu=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0401486901") { // Visnam
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuu.vin-hoadon.com/tracuuhoadon/thongtinchung?mstdoanhnghiep=${MSTNBan}&masobimat=${MaTCHdon}&loaitracuu=1`);
   }
 
-else if(MSTTCGP==="0102519041") { // EFY)
+else if(MSTTCGP==="0102519041") { // EFY
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://ihoadon.vn/kiem-tra`);
   add(`http://ihoadon.vn/kiem-tra/?shd=${SHDonV}&mtc=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0315638251") { // HT
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://laphoadon.htinvoice.vn/TraCuu?txtMaTraCuu=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0106713804") { // Hilo
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuuhddt78.hilo.com.vn/Invoice/Search?taxcode=${MSTNBan}&key=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0105844836") { // Mega
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuu.vinvoice.vn/Invoice/SearchTaxInv?key=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0314185087") { // Vi Na
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://hoadon.onlinevina.com.vn/invoice?keyCode=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0101352495") { // VNIS
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuu.v50.vninvoice.vn/?mst=${MSTNBan}&key=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0103019524") { // VNAirline
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://einvoice.vietnamairlines.com/?mst=${MSTNBan}&key=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0102325399") { // Vietjet
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://einvoice.vietjetair.com/Invoice/Search?code=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0101289966") { // Nhan hoa
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://tracuu.e-hoadon.cloud/?BenBanMaDonVi=${MSTNBan}&MaTraCuuHoaDon=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0302712571") { // Mat Bao
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://matbao.in/tra-cuu-hoa-don/?ma-tra-cuu=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0101925883") { // CMC
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://tracuu.cinvoice.vn/?soC=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0102331762") { // VNISC
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://invoice.abcsys.vn/Invoice/Search/?txtSoHoaDon=${MaTCHdon}`);
   add(`https://invoice.abcsys.vn/Invoice/ViewPDF?InvoiceNumber=${MHSo}`);
   add(`https://invoice.abcsys.vn/Invoice/DownloadXML?InvoiceNumber=${MHSo}`);
   }
 
 else if(MSTTCGP==="0302431595") { // P.A
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://hoadon.pavietnam.vn/?OrderID=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0315382923") { // SES
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://hoadon78.sesgroup.vn/hddt/tracuuhd?kh-mst=${MSTNMua}&shdon=${SHDonV}&secure-key=${MaTCHdon}`);
   add(`${LinkTCHdon}/hddt/tracuuhd?kh-mst=${MSTNMua}&shdon=${SHDonV}&secure-key=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0305142231") { // Rosy
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://einv.rosysoft.vn:8386/RSeInvoiceDetail/ViewHtml?taxcode=${MSTNBan}&id=${MaTCHdon}`);
   add(`https://einv.rosysoft.vn:8386/RSeInvoiceSearch?TaxCode=${MSTNBan}`);
   add(`https://einv.rosysoft.vn:8386/RSeInvoiceSearch?TaxCode=${MSTNBan}&InvSerial=${KHMSHDon}${KHHDon}&InvNo=${SHDonV}&Total=${TgTTTBSo}`);
   }
 
 else if(MSTTCGP==="0108516079") { // 3A
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`http://hddt.3asoft.vn/Home/Search?mst=${MSTNBan}&shd=${SHDonV}&mtk=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0301448733") { // Lac Viet
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://accnet.vn/hoa-don-dien-tu?Code=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0104908371") { // ACMAN
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://www.hoadondientu.acman.vn/tra-cuu/hoa-don.html?MaDonViPhatHanh=${MSTNBan}&?MaTraCuuHoaDon=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0104614692") { // IDOC
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://hoadontvan.com/TraCuu?invoiceCode=${MaTCHdon}`);
   }
 
 else if(MSTTCGP==="0106777621") { // NDTV
+  add(`Mã tra cứu: ${MaTCHdon}`);
   add(`https://hoadontvan.com/TraCuu?invoiceCode=${MaTCHdon}`);
   }
 
@@ -383,7 +429,7 @@ Ngày ký hóa đơn: ${NKyNBan}<br>
 Ngày CQT ký hóa đơn: ${NKyCQT}<br>
 MST - Tên người bán: ${MSTNBan} - ${TenNBan}<br>
 Mã CQT: ${MCCQT}<br><br>
-<b>Đường dẫn tra cứu hóa đơn:</b><br>`;
+<b>Thông tin tra cứu hóa đơn:</b><br>`;
 
  if(!links.length){
   html+=`Chưa có thông tin tra cứu hóa đơn của nhà cung cấp mã số thuế ${MSTTCGP}`;
