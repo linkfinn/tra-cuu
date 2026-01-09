@@ -372,17 +372,16 @@ else if(MSTTCGP==="0106777621") { // NDTV
 
 
  let html=`<div class="block"><b>File:</b> ${name}<br><br>
-Mẫu số: ${KHMSHDon}<br>
-Ký hiệu: ${KHHDon}<br>
+Mẫu số - ký kiệu: ${KHMSHDon} - ${KHHDon}<br>
 Số hóa đơn: ${SHDon}<br>
 Ngày hóa đơn: ${NLap}<br>
 Ngày ký hóa đơn: ${NKyNBan}<br>
 Ngày CQT ký hóa đơn: ${NKyCQT}<br>
-Tên người bán: ${TenNBan}<br>
-MST người bán: ${MSTNBan}<br>
+MST - Tên người bán: ${MSTNBan} - ${TenNBan}<br>
 Mã CQT: ${MCCQT}<br><br>
 <b>Đường dẫn tra cứu hóa đơn:</b><br>`;
 
+Mã tra cứu: ${MaTCHdon}<br>
  if(!links.length){
   html+=`Chưa có thông tin tra cứu hóa đơn của nhà cung cấp mã số thuế ${MSTTCGP}`;
   if(MSTTCGP && !MaTCHdon) html+=`<br>Không tồn tại mã tra cứu trong file XML`;
