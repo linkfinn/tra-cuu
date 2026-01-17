@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Libre Baskerville',serif;font-size:13px}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #999;padding:6px}
+th{text-align:center;background:#f0f0f0}
+td.number{text-align:right}
+tr.nodata{background:#f8ebf7}
+tbody tr:hover{background:#defaf9}
+.controls{margin-bottom:10px;display:flex;gap:10px;align-items:center}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <select id="source"></select>
+  <select id="year">
+    <option>2023</option>
+    <option>2024</option>
+    <option>2025</option>
+    <option selected>2026</option>
+  </select>
+  <button id="btn">L?y d? li?u</button>
+  <input id="search" placeholder="Tìm ki?m...">
+</div>
+
+<h2 id="title">Chua t?i d? li?u</h2>
+
+<table>
+<thead>
+<tr>
+<th>X/V</th><th>Ngày</th><th>Khách hàng</th><th>T?ng ti?n</th>
+<th>Tr?ng thái</th><th>V</th><th>Tra c?u</th><th>ID</th><th>Xem</th>
+</tr>
+</thead>
+<tbody id="tb"><tr><td colspan="9">Chua có d? li?u</td></tr></tbody>
+</table>
+
+<script>
+// ===== DOM =====
+const source = document.getElementById('source');
+const year = document.getElementById('year');
+const title = document.getElementById('title');
+const tb = document.getElementById('tb');
+const search = document.getElementById('search');
+const btn = document.getElementById('btn');
+
+// ===== CONFIG =====
+const CSV_MAP = {
+  dvft:{label:'Ð?u vào Finn',group:'DV',url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1180743955&single=true&output=csv'},
+  dvfm:{label:'Ð?u vào Finn Xu?ng',group:'DV',url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1178854260&single=true&output=csv'},
+  drft:{label:'Ð?u ra Finn',group:'DR',url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=147272766&single=true&output=csv'},
+  drfm:{label:'Ð?u ra Finn Xu?ng',group:'DR',url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1704976963&single=true&output=csv'}
+};
+
+const COL_DV={X:23,E:4,G:6,M:12,P:15,V:21,S:18,T:19,AA:26,AB:27,AD:29};
+const COL_DR={V:21,E:4,G:6,M:12,P:15,S:18,T:19,AD:29,X:23,Y:24};
+
+let origin=[];
+
+// ===== INIT SOURCE =====
+Object.entries(CSV_MAP).forEach(([k,v])=>{
+  const o=document.createElement('option');
+  o.value=k;o.textContent=v.label;
+  source.appendChild(o);
+});
+
+// ===== CSV =====
+function parseCSV(t){
+  const r=[];let c='',row=[],q=false;
+  for(let i=0;i<t.length;i++){
+    const ch=t[i],n=t[i+1];
+    if(ch=='"'&&n=='"'){c+='"';i++}
+    else if(ch=='"')q=!q
+    else if(ch==','&&!q){row.push(c);c=''}
+    else if((ch=='\n'||ch=='\r')&&!q){if(row.length){row.push(c);r.push(row)}row=[];c=''}
+    else c+=ch
+  }
+  if(row.length){row.push(c);r.push(row)}
+  return r;
+}
+
+function yearOf(v){const m=v.match(/(\d{4})/);return m?m[1]:null}
+
+// ===== LOAD =====
+async function load(){
+  const cfg=CSV_MAP[source.value];
+  const y=year.value;
+  title.textContent=`${cfg.label} nam ${y}`;
+  tb.innerHTML='<tr><td colspan=9>Ðang load...</td></tr>';
+
+  const csv=await fetch(cfg.url).then(r=>r.text());
+  const rows=parseCSV(csv);
+  origin=[];
+
+  for(let i=4;i<rows.length;i++){
+    const r=rows[i];
+    const d=r[cfg.group==='DV'?COL_DV.E:COL_DR.E];
+    if(!d||yearOf(d)!==y)continue;
+
+    if(cfg.group==='DV'){
+      origin.push({
+        X:r[COL_DV.X],E:d,G:r[COL_DV.G],M:r[COL_DV.M],
+        P:r[COL_DV.P],V:r[COL_DV.V],
+        S:r[COL_DV.S],S_link:r[COL_DV.AA],
+        T:r[COL_DV.T],XEM:r[COL_DV.AB],AD:r[COL_DV.AD]
+      });
+    }else{
+      origin.push({
+        X:r[COL_DR.V],E:d,G:r[COL_DR.G],M:r[COL_DR.M],
+        P:r[COL_DR.P],V:'',
+        S:r[COL_DR.S],S_link:r[COL_DR.X],
+        T:r[COL_DR.T],XEM:r[COL_DR.Y],AD:r[COL_DR.AD]
+      });
+    }
+  }
+  render(origin);
+}
+
+function render(data){
+  tb.innerHTML='';
+  if(!data.length){tb.innerHTML='<tr><td colspan=9>Không có d? li?u</td></tr>';return}
+  data.forEach(r=>{
+    const tr=document.createElement('tr');
+    if(!r.AD||r.AD==='NoData')tr.className='nodata';
+    tr.innerHTML=`
+<td>${r.X||''}</td>
+<td>${r.E}</td>
+<td>${r.G||''}</td>
+<td class="number">${(+r.M||0).toLocaleString()}</td>
+<td>${r.P||''}</td>
+<td>${r.V||''}</td>
+<td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:r.S}</td>
+<td>${r.T||''}</td>
+<td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+btn.onclick=load;
+search.onkeyup=()=>render(origin.filter(r=>Object.values(r).some(v=>v&&v.toString().toLowerCase().includes(search.value.toLowerCase()))));
+</script>
+</body>
+</html>
