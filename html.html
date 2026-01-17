@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
 <meta charset="utf-8">
 
-<!-- ===== GOOGLE FONT ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
@@ -19,10 +18,10 @@ th{text-align:center;background:#f0f0f0}
 td.number{text-align:right}
 tr.nodata{background:#f8ebf7}
 tbody tr:hover{background:#defaf9}
-.controls{margin-bottom:12px;display:flex;gap:10px;align-items:center}
+.controls{margin-bottom:10px;display:flex;gap:10px;align-items:center}
+a{color:inherit;text-decoration:none}
 </style>
 </head>
-
 <body>
 
 <div class="controls">
@@ -37,78 +36,63 @@ tbody tr:hover{background:#defaf9}
   <input id="search" placeholder="Tìm kiếm..." onkeyup="filter()">
 </div>
 
-<h2 id="title">Đang load...</h2>
+<h2 id="title">Đang load dữ liệu...</h2>
 
 <table>
 <thead id="thead"></thead>
 <tbody id="tb">
-<tr><td colspan="9" align="center">Đang load...</td></tr>
+<tr><td colspan="9" align="center">Đang load dữ liệu ...</td></tr>
 </tbody>
 </table>
 
 <script>
 /* =======================
-   DOM
-======================= */
-const source = document.getElementById('source');
-const year = document.getElementById('year');
-const title = document.getElementById('title');
-const tb = document.getElementById('tb');
-const search = document.getElementById('search');
-const thead = document.getElementById('thead');
-
-/* =======================
-   CSV CONFIG
+   CONFIG CSV
 ======================= */
 const CSV_MAP = {
-  dvft:{
-    label:'Đầu vào Finn',
-    group:'DV',
-    url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1180743955&single=true&output=csv'
+  dvft: {
+    label: 'Đầu vào Finn',
+    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1180743955&single=true&output=csv',
+    group: 'DV'
   },
-  dvfm:{
-    label:'Đầu vào Finn Xưởng',
-    group:'DV',
-    url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1178854260&single=true&output=csv'
+  dvfm: {
+    label: 'Đầu vào Finn Xưởng',
+    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1178854260&single=true&output=csv',
+    group: 'DV'
   },
-  drft:{
-    label:'Đầu ra Finn',
-    group:'DR',
-    url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=147272766&single=true&output=csv'
+  drft: {
+    label: 'Đầu ra Finn',
+    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=147272766&single=true&output=csv',
+    group: 'DR'
   },
-  drfm:{
-    label:'Đầu ra Finn Xưởng',
-    group:'DR',
-    url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1704976963&single=true&output=csv'
+  drfm: {
+    label: 'Đầu ra Finn Xưởng',
+    url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQcra_L88XF16TMRuyqoZwFWvQkjzAwI4BhLNWSBA4fcHhKQzpnvoKdIyflfnCh25uWZzrfRhMvkyIc/pub?gid=1704976963&single=true&output=csv',
+    group: 'DR'
   }
 };
 
 /* =======================
-   COLUMN MAP
+   COLUMN MAP (GIỮ NGUYÊN)
 ======================= */
-const COL_DV={X:23,E:4,G:6,M:12,P:15,V:21,S:18,T:19,AA:26,AB:27,AD:29};
-const COL_DR={V:21,E:4,G:6,M:12,P:15,S:18,T:19,AD:29,X:23,Y:24};
+const COL_DV = { X:23,E:4,G:6,M:12,P:15,V:21,S:18,T:19,AA:26,AB:27,AD:29 };
+const COL_DR = { V:21,E:4,G:6,M:12,P:15,S:18,T:19,AD:29,X:23,Y:24 };
 
-/* =======================
-   TABLE HEADER
-======================= */
-const TABLE_HEADER={
-  DV:['MST-KH-Số HĐ','Ngày chứng từ','Tên khách hàng','Tổng tiền','Trạng thái','V','Web tra cứu','ID/Fkey','Xem'],
-  DR:['V','Ngày chứng từ','Tên khách hàng','Tổng tiền','Trạng thái','Tra cứu','ID/Fkey','AD','Xem']
-};
+let origin=[];
 
 /* =======================
    INIT SOURCE SELECT
 ======================= */
+const source=document.getElementById('source');
 Object.entries(CSV_MAP).forEach(([k,v])=>{
   source.innerHTML+=`<option value="${k}">${v.label}</option>`;
 });
 
 /* =======================
-   HELPERS
+   CSV PARSER (GIỮ NGUYÊN)
 ======================= */
 function parseCSV(t){
-  const r=[];let row=[],c='',q=false;
+  const r=[];let c='',row=[],q=false;
   for(let i=0;i<t.length;i++){
     const ch=t[i],n=t[i+1];
     if(ch=='"'&&n=='"'){c+='"';i++}
@@ -123,27 +107,44 @@ function parseCSV(t){
   return r
 }
 
+/* =======================
+   YEAR + NUMBER FIX
+======================= */
 function getYear(v){
   const m=v?.match(/(19|20)\d{2}/);
   return m?m[0]:null;
 }
 
-function formatDate(v){
-  const m=v?.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-]((19|20)\d{2})/);
-  return m?`${m[1].padStart(2,'0')}/${m[2].padStart(2,'0')}/${m[3]}`:v||'';
+/* 🔧 SỬA DUY NHẤT CHO DR */
+function parseNumber(val){
+  if(!val) return 0;
+  let v=val.toString().trim();
+  if(v.includes('.')&&!v.includes(',')) v=v.replace(/\./g,'');
+  if(v.includes(',')&&v.includes('.')){
+    if(v.lastIndexOf(',')>v.lastIndexOf('.')){
+      v=v.replace(/\./g,'').replace(',','.');
+    }else{
+      v=v.replace(/,/g,'');
+    }
+  }
+  const n=Number(v);
+  return isNaN(n)?0:n;
 }
 
-function shortT(v){
-  if(!v) return '';
-  return v.length>20 ? v.slice(0,18)+'***' : v;
-}
+/* =======================
+   HEADER
+======================= */
+const TABLE_HEADER={
+  DV:['MST-KH-Số HĐ','Ngày','Tên KH','Tổng tiền','Trạng thái','V','Web','ID','Xem'],
+  DR:['V','Ngày','Tên KH','Tổng tiền','Trạng thái','Web','ID','AD','Xem']
+};
 
 function renderHeader(group){
   thead.innerHTML='';
   const tr=document.createElement('tr');
-  TABLE_HEADER[group].forEach(h=>{
+  TABLE_HEADER[group].forEach(t=>{
     const th=document.createElement('th');
-    th.textContent=h;
+    th.textContent=t;
     tr.appendChild(th);
   });
   thead.appendChild(tr);
@@ -152,7 +153,11 @@ function renderHeader(group){
 /* =======================
    LOAD DATA
 ======================= */
-let origin=[];
+const year=document.getElementById('year');
+const title=document.getElementById('title');
+const tb=document.getElementById('tb');
+const search=document.getElementById('search');
+const thead=document.getElementById('thead');
 
 function load(){
   const key=source.value;
@@ -160,99 +165,87 @@ function load(){
   const cfg=CSV_MAP[key];
 
   title.textContent=`${cfg.label} năm ${y}`;
-  tb.innerHTML='<tr><td colspan="9">Đang load...</td></tr>';
   renderHeader(cfg.group);
+  tb.innerHTML='<tr><td colspan="9">Đang load dữ liệu ...</td></tr>';
 
   fetch(cfg.url).then(r=>r.text()).then(t=>{
     const rows=parseCSV(t);
     origin=[];
-
     for(let i=4;i<rows.length;i++){
       const r=rows[i];
       const d=r[cfg.group==='DV'?COL_DV.E:COL_DR.E];
-      if(!d||getYear(d)!==y)continue;
+      if(!d||getYear(d)!==y) continue;
 
       if(cfg.group==='DV'){
         origin.push({
           X:r[COL_DV.X],
-          E:formatDate(d),
+          E:d,
           G:r[COL_DV.G],
-          M:r[COL_DV.M],
+          M:parseNumber(r[COL_DV.M]),
           P:r[COL_DV.P],
           V:r[COL_DV.V],
           S:r[COL_DV.S],
           S_link:r[COL_DV.AA],
-          T:shortT(r[COL_DV.T]),
+          T:r[COL_DV.T],
           XEM:r[COL_DV.AB],
           AD:r[COL_DV.AD]
         });
       }else{
         origin.push({
-          V:r[COL_DR.V],
-          E:formatDate(d),
+          X:r[COL_DR.V],
+          E:d,
           G:r[COL_DR.G],
-          M:r[COL_DR.M],
+          M:parseNumber(r[COL_DR.M]),   // 🔧 FIX DR
           P:r[COL_DR.P],
           S:r[COL_DR.S],
           S_link:r[COL_DR.X],
-          T:shortT(r[COL_DR.T]),
-          XEM:r[COL_DR.Y],
-          AD:r[COL_DR.AD]
+          T:r[COL_DR.T],
+          AD:r[COL_DR.AD],
+          XEM:r[COL_DR.Y]
         });
       }
     }
-    render(origin,cfg.group);
+    render(origin);
   });
 }
 
 /* =======================
    RENDER
 ======================= */
-function render(data,group){
+function render(data){
   tb.innerHTML='';
   if(!data.length){
     tb.innerHTML='<tr><td colspan="9">Không có dữ liệu</td></tr>';
     return;
   }
-
   data.forEach(r=>{
     const tr=document.createElement('tr');
 
-    if(group==='DV' && r.AD==='NoData') tr.className='nodata';
-    if(group==='DR' && !r.AD) tr.className='nodata';
+    if((r.AD==='NoData')||(!r.AD)) tr.className='nodata';
 
-    tr.innerHTML = group==='DV' ? `
-      <td>${r.X||''}</td>
-      <td>${r.E}</td>
-      <td>${r.G||''}</td>
-      <td class="number">${(+r.M||0).toLocaleString()}</td>
-      <td>${r.P||''}</td>
-      <td>${r.V||''}</td>
-      <td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:r.S}</td>
-      <td>${r.T||''}</td>
-      <td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
-    ` : `
-      <td>${r.V||''}</td>
-      <td>${r.E}</td>
-      <td>${r.G||''}</td>
-      <td class="number">${(+r.M||0).toLocaleString()}</td>
-      <td>${r.P||''}</td>
-      <td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:r.S}</td>
-      <td>${r.T||''}</td>
-      <td>${r.AD||''}</td>
-      <td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
-    `;
+    const tText=(r.T&&r.T.length>20)?r.T.slice(0,18)+'***':r.T;
+
+    tr.innerHTML=`
+<td>${r.X||''}</td>
+<td>${r.E||''}</td>
+<td>${r.G||''}</td>
+<td class="number">${r.M.toLocaleString('en-US')}</td>
+<td>${r.P||''}</td>
+<td>${r.V||''}</td>
+<td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:(r.S||'')}</td>
+<td>${tText||''}</td>
+<td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
+`;
     tb.appendChild(tr);
   });
 }
 
 /* =======================
-   SEARCH
+   FILTER
 ======================= */
 function filter(){
   const k=search.value.toLowerCase();
-  render(origin.filter(r=>Object.values(r).some(v=>v&&v.toString().toLowerCase().includes(k))),
-         CSV_MAP[source.value].group);
+  render(origin.filter(r=>Object.values(r).some(v=>v&&v.toString().toLowerCase().includes(k))));
 }
 
 window.onload=load;
