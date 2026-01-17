@@ -178,6 +178,7 @@ function load(){
 
       if(cfg.group==='DV'){
         origin.push({
+          Dgroup: 'DV',
           X:r[COL_DV.X],
           E:d,
           G:r[COL_DV.G],
@@ -192,6 +193,7 @@ function load(){
         });
       }else{
         origin.push({
+          Dgroup: 'DR',
           X:r[COL_DR.V],
           E:d,
           G:r[COL_DR.G],
@@ -221,14 +223,19 @@ function render(data){
   data.forEach(r=>{
     const tr=document.createElement('tr');
 
-    const adVal = (r.AD || '')
-    .toString()
-    .replace(/\s+/g,'')      // bỏ toàn bộ space, NBSP, xuống dòng
-    .toLowerCase();
+    const adRaw = (r.AD ?? '').toString();
+    const adNorm = adRaw.replace(/\s+/g,'').toLowerCase();
 
-    if(adVal === 'nodata'){
+    if(r.Dgroup === 'DV'){ // DV: chỉ bôi khi = NoData
+    if(adNorm === 'nodata'){
     tr.className = 'nodata';
     }
+    } else if(r.Dgroup === 'DR'){  // DR: bôi khi AD rỗng
+    if(adNorm === ''){
+    tr.className = 'nodata';
+    }
+  }
+
 
     const tText=(r.T&&r.T.length>20)?r.T.slice(0,18)+'***':r.T;
 
@@ -259,5 +266,6 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
 
