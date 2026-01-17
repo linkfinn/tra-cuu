@@ -221,7 +221,7 @@ function render(data){
   data.forEach(r=>{
     const tr=document.createElement('tr');
 
-    if((r.AD==='NoData')||(!r.AD)) tr.className='nodata';
+    if(  !r.AD ||  r.AD.toString().toLowerCase() === 'nodata'){  tr.className = 'nodata';}
 
     const tText=(r.T&&r.T.length>20)?r.T.slice(0,18)+'***':r.T;
 
@@ -252,3 +252,4 @@ window.onload=load;
 </script>
 </body>
 </html>
+
