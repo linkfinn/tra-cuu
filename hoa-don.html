@@ -238,18 +238,31 @@ function render(data){
 
 
     const tText=(r.T&&r.T.length>20)?r.T.slice(0,18)+'***':r.T;
-
+  if(r.Dgroup === 'DV'){
     tr.innerHTML=`
-<td>${r.X||''}</td>
-<td>${r.E||''}</td>
-<td>${r.G||''}</td>
-<td class="number">${r.M.toLocaleString('en-US')}</td>
-<td>${r.P||''}</td>
-<td>${r.V||''}</td>
-<td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:(r.S||'')}</td>
-<td>${tText||''}</td>
-<td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
-`;
+  <td>${r.X||''}</td>
+  <td>${r.E||''}</td>
+  <td>${r.G||''}</td>
+  <td class="number">${r.M.toLocaleString('en-US')}</td>
+  <td>${r.P||''}</td>
+  <td>${r.V||''}</td>
+  <td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:(r.S||'')}</td>
+  <td>${tText||''}</td>
+  <td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
+  `;
+    }else{
+    tr.innerHTML=`
+  <td>${r.X||''}</td>
+  <td>${r.E||''}</td>
+  <td>${r.G||''}</td>
+  <td class="number">${r.M.toLocaleString('en-US')}</td>
+  <td>${r.P||''}</td>
+  <td>${r.V||''}</td>
+  <td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:(r.S||'')}</td>
+  <td>${tText||''}</td>
+  <td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
+  `;
+    }
     tb.appendChild(tr);
   });
 }
@@ -262,10 +275,26 @@ function filter(){
   render(origin.filter(r=>Object.values(r).some(v=>v&&v.toString().toLowerCase().includes(k))));
 }
 
+/* =======================
+   READ URL PARAM
+======================= */
+(function(){
+  const params = new URLSearchParams(window.location.search);
+
+  const nameParam = params.get('name');
+  const yearParam = params.get('year');
+
+  if(nameParam && CSV_MAP[nameParam]){
+    source.value = nameParam;
+  }
+
+  if(yearParam){
+    const opt = [...year.options].find(o => o.value === yearParam);
+    if(opt) year.value = yearParam;
+  }
+})();
+ 
 window.onload=load;
 </script>
 </body>
 </html>
-
-
-
