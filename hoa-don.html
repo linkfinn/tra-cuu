@@ -81,6 +81,45 @@ const COL_DR = { V:21,E:4,G:6,M:12,P:15,S:18,T:19,AD:29,X:23,Y:24 };
 let origin=[];
 
 /* =======================
+   GET COLUMN INDEX DYNAMICALLY FROM HEADER ROW
+======================= */
+function getColumnIndexes(headers, group) {
+  const map = {};
+
+  function idx(name) {
+    const i = headers.indexOf(name);
+    return i === -1 ? null : i;
+  }
+
+  if (group === 'DV') {
+    map.Noido     = idx('Nối');
+    map.Nlap      = idx('Ngày lập');
+    map.TenKH     = idx('Tên người bán/Tên người xuất hàng');
+    map.Tongtien  = idx('Tổng tiền thanh toán');
+    map.Trangthai = idx('Trạng thái hóa đơn');
+    map.Checkinfo = idx('Check TT');
+    map.WebTC     = idx('Link web tra cứu');
+    map.LinkTC    = idx('Link tra cứu');
+    map.Fkey      = idx('Fkey/ ID');
+    map.Linkview  = idx('Link xem hóa đơn');
+    map.Nhaplieu  = idx('Ngày lập (check)');
+  } else {
+    map.Noido     = idx('Nối');
+    map.Nlap      = idx('Ngày lập');
+    map.TenKH     = idx('Tên người mua/Tên người nhận hàng');
+    map.Tongtien  = idx('Tổng tiền thanh toán');
+    map.Trangthai = idx('Trạng thái hóa đơn');
+    map.Congtrinh = idx('Mã Công trình');
+    map.WebTC     = idx('Link web tra cứu');
+    map.LinkTC    = idx('Link tra cứu');
+    map.Fkey      = idx('Fkey/ ID');
+    map.Linkview  = idx('Link xem hóa đơn');
+    map.Nhaplieu  = idx('Ngày lập (check)');
+  }
+  return map;
+}
+  
+/* =======================
    INIT SOURCE SELECT
 ======================= */
 const source=document.getElementById('source');
@@ -171,39 +210,42 @@ function load(){
   fetch(cfg.url).then(r=>r.text()).then(t=>{
     const rows=parseCSV(t);
     origin=[];
+    const headers = rows[3]; // Hàng thứ 4 (index 3)
+    const col = getColumnIndexes(headers, cfg.group); // Lấy các chỉ mục cột theo tên cột từ header row
     for(let i=4;i<rows.length;i++){
       const r=rows[i];
-      const d=r[cfg.group==='DV'?COL_DV.E:COL_DR.E];
+      const d = r[col.Nlap]; // Lấy giá trị cột "Ngày"
       if(!d||getYear(d)!==y) continue;
 
       if(cfg.group==='DV'){
         origin.push({
           Dgroup: 'DV',
-          X:r[COL_DV.X],
-          E:d,
-          G:r[COL_DV.G],
-          M:parseNumber(r[COL_DV.M]),
-          P:r[COL_DV.P],
-          V:r[COL_DV.V],
-          S:r[COL_DV.S],
-          S_link:r[COL_DV.AA],
-          T:r[COL_DV.T],
-          XEM:r[COL_DV.AB],
-          AD:r[COL_DV.AD]
+          Noido:r[col.Noido],
+          Nlap:d,
+          TenKH:r[col.TenKH],
+          Tongtien:parseNumber(r[col.Tongtien]),
+          Trangthai:r[col.Trangthai],
+          Checkinfo:r[col.Checkinfo],
+          WebTC:r[col.WebTC],
+          LinkTC:r[col.LinkTC],
+          Fkey:r[col.Fkey],
+          Linkview:r[col.Linkview],
+          Nhaplieu:r[col.Nhaplieu]
         });
       }else{
         origin.push({
           Dgroup: 'DR',
-          V:r[COL_DR.V],
-          E:d,
-          G:r[COL_DR.G],
-          M:parseNumber(r[COL_DR.M]),   // 🔧 FIX DR
-          P:r[COL_DR.P],
-          S:r[COL_DR.S],
-          S_link:r[COL_DR.X],
-          T:r[COL_DR.T],
-          AD:r[COL_DR.AD],
-          XEM:r[COL_DR.Y]
+          Noido:r[col.Noido],
+          Nlap:d,
+          TenKH:r[col.TenKH],
+          Tongtien:parseNumber(r[col.Tongtien]),   // 🔧 FIX DR
+          Trangthai:r[col.Trangthai],
+          Congtrinh:r[col.Congtrinh],
+          WebTC:r[col.WebTC],
+          LinkTC:r[col.LinkTC],
+          Fkey:r[col.Fkey],
+          Linkview:r[col.Linkview],
+          Nhaplieu:r[col.Nhaplieu]
         });
       }
     }
@@ -223,44 +265,44 @@ function render(data){
   data.forEach(r=>{
     const tr=document.createElement('tr');
 
-    const adRaw = (r.AD ?? '').toString();
+    const adRaw = (r.Nhaplieu ?? '').toString();
     const adNorm = adRaw.replace(/\s+/g,'').toLowerCase();
 
-    if(r.Dgroup === 'DV'){ // DV: chỉ bôi khi = NoData
+    if(r.Dgroup === 'DV'){ // DV: chỉ bôi khi ngày lập (check) = NoData
     if(adNorm === 'nodata'){
     tr.className = 'nodata';
     }
-    } else if(r.Dgroup === 'DR'){  // DR: bôi khi AD rỗng
+    } else if(r.Dgroup === 'DR'){  // DR: bôi khi Công trình rỗng
     if(adNorm === ''){
     tr.className = 'nodata';
     }
   }
 
 
-    const tText=(r.T&&r.T.length>20)?r.T.slice(0,18)+'***':r.T;
+    const FkeyText=(r.Fkey&&r.Fkey.length>20)?r.Fkey.slice(0,18)+'***':r.Fkey;
   if(r.Dgroup === 'DV'){
     tr.innerHTML=`
-  <td>${r.X||''}</td>
-  <td>${r.E||''}</td>
-  <td>${r.G||''}</td>
-  <td class="number">${r.M.toLocaleString('en-US')}</td>
-  <td>${r.P||''}</td>
-  <td>${r.V||''}</td>
-  <td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:(r.S||'')}</td>
-  <td>${tText||''}</td>
-  <td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
+  <td>${r.Noido||''}</td>
+  <td>${r.Nlap||''}</td>
+  <td>${r.TenKH||''}</td>
+  <td class="number">${r.Tongtien.toLocaleString('en-US')}</td>
+  <td>${r.Trangthai||''}</td>
+  <td>${r.Checkinfo||''}</td>
+  <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
+  <td>${FkeyText||''}</td>
+  <td>${r.Linkview?`<a href="${r.Linkview}" target="_blank">xem</a>`:''}</td>
   `;
     }else{
     tr.innerHTML=`
-  <td>${r.V||''}</td>
-  <td>${r.E||''}</td>
-  <td>${r.G||''}</td>
-  <td class="number">${r.M.toLocaleString('en-US')}</td>
-  <td>${r.P||''}</td>
-  <td>${r.V||''}</td>
-  <td>${r.S_link?`<a href="${r.S_link}" target="_blank">${r.S}</a>`:(r.S||'')}</td>
-  <td>${tText||''}</td>
-  <td>${r.XEM?`<a href="${r.XEM}" target="_blank">xem</a>`:''}</td>
+  <td>${r.Noido||''}</td>
+  <td>${r.Nlap||''}</td>
+  <td>${r.TenKH||''}</td>
+  <td class="number">${r.Tongtien.toLocaleString('en-US')}</td>
+  <td>${r.Trangthai||''}</td>
+  <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
+  <td>${FkeyText||''}</td>
+  <td>${r.Congtrinh||''}</td>
+  <td>${r.Linkview?`<a href="${r.Linkview}" target="_blank">xem</a>`:''}</td>
   `;
     }
     tb.appendChild(tr);
@@ -298,4 +340,5 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
