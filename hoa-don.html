@@ -73,7 +73,7 @@ const CSV_MAP = {
 };
 
 /* =======================
-   COLUMN MAP (GIỮ NGUYÊN)
+   COLUMN MAP
 ======================= */
 const COL_DV = { X:23,E:4,G:6,M:12,P:15,V:21,S:18,T:19,AA:26,AB:27,AD:29 };
 const COL_DR = { V:21,E:4,G:6,M:12,P:15,S:18,T:19,AD:29,X:23,Y:24 };
@@ -89,7 +89,7 @@ Object.entries(CSV_MAP).forEach(([k,v])=>{
 });
 
 /* =======================
-   CSV PARSER (GIỮ NGUYÊN)
+   CSV PARSER
 ======================= */
 function parseCSV(t){
   const r=[];let c='',row=[],q=false;
@@ -135,8 +135,8 @@ function parseNumber(val){
    HEADER
 ======================= */
 const TABLE_HEADER={
-  DV:['MST-KH-Số HĐ','Ngày','Tên KH','Tổng tiền','Trạng thái','V','Web','ID','Xem'],
-  DR:['V','Ngày','Tên KH','Tổng tiền','Trạng thái','Web','ID','AD','Xem']
+  DV:['MST-KH-Số hóa đơn','Ngày','Tên khách hàng','Tổng tiền','Trạng thái','Check','Web tra cứu','ID/Fkey','Xem'],
+  DR:['MST-KH-Số hóa đơn','Ngày','Tên khách hàng','Tổng tiền','Trạng thái','Web','ID/Fkey','Công trình','Xem']
 };
 
 function renderHeader(group){
@@ -194,7 +194,7 @@ function load(){
       }else{
         origin.push({
           Dgroup: 'DR',
-          X:r[COL_DR.V],
+          V:r[COL_DR.V],
           E:d,
           G:r[COL_DR.G],
           M:parseNumber(r[COL_DR.M]),   // 🔧 FIX DR
@@ -252,7 +252,7 @@ function render(data){
   `;
     }else{
     tr.innerHTML=`
-  <td>${r.X||''}</td>
+  <td>${r.V||''}</td>
   <td>${r.E||''}</td>
   <td>${r.G||''}</td>
   <td class="number">${r.M.toLocaleString('en-US')}</td>
