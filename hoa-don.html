@@ -265,7 +265,7 @@ function render(data){
   data.forEach(r=>{
     const tr=document.createElement('tr');
 
-    const adRaw = (r.Nhaplieu ?? '').toString();
+    const adRaw = (r.Dgroup==='DV' ? r.Nhaplieu : r.Congtrinh) ?? '';
     const adNorm = adRaw.replace(/\s+/g,'').toLowerCase();
 
     if(r.Dgroup === 'DV'){ // DV: chỉ bôi khi ngày lập (check) = NoData
@@ -340,5 +340,3 @@ window.onload=load;
 </script>
 </body>
 </html>
-
-
