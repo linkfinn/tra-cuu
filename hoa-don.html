@@ -20,10 +20,45 @@ tr.nodata{background:#f8ebf7}
 tbody tr:hover{background:#defaf9}
 .controls{margin-bottom:10px;display:flex;gap:10px;align-items:center}
 a{color:inherit;text-decoration:none}
+
+/* ===== DASHBOARD TABS ===== */
+.tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:14px;
+}
+.tab{
+  padding:8px 16px;
+  background:#e3f2fd;
+  border-radius:8px 8px 0 0;
+  text-decoration:none;
+  color:#045;
+  font-weight:600;
+  transition:all .25s ease;
+  border:1px solid #bbdefb;
+}
+.tab:hover{
+  background:#bbdefb;
+}
+.tab.active{
+  background:linear-gradient(135deg,#64b5f6,#ffffff);
+  color:#003;
+  border-bottom:1px solid #fff;
+}
+
 </style>
 </head>
 <body>
 
+<div class="tabs" id="dashboardTabs">
+  <a class="tab" data-tab="invoice" href="#">Hóa đơn</a>
+  <a class="tab" data-tab="lookup"
+     href="https://linkfinn.github.io/tra-cuu/tra-cuu-hoa-don.html"
+     target="_blank">
+     Tra cứu hóa đơn
+  </a>
+</div>
+  
 <div class="controls">
   <select id="source"></select>
   <select id="year">
@@ -335,8 +370,31 @@ function filter(){
     if(opt) year.value = yearParam;
   }
 })();
- 
+
+/* =======================
+   DASHBOARD TAB ACTIVE
+======================= */
+(function(){
+  const tabs = document.querySelectorAll('.tab');
+  const params = new URLSearchParams(window.location.search);
+
+  // Mặc định tab hóa đơn
+  let activeTab = 'invoice';
+
+  // Nếu sau này bạn muốn phân tab theo param
+  if(params.get('page')){
+    activeTab = params.get('page');
+  }
+
+  tabs.forEach(t=>{
+    if(t.dataset.tab === activeTab){
+      t.classList.add('active');
+    }
+  });
+})();
+
 window.onload=load;
 </script>
 </body>
 </html>
+
