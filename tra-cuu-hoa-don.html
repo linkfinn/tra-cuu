@@ -20,11 +20,43 @@ a:hover{color:#003366}
     padding:12px;
     margin-top:15px;
 }
+
+/* ===== DASHBOARD TABS ===== */
+.tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:14px;
+}
+.tab{
+  padding:8px 16px;
+  background:#e3f2fd;
+  border-radius:8px 8px 0 0;
+  text-decoration:none;
+  color:#045;
+  font-weight:600;
+  transition:all .25s ease;
+  border:1px solid #bbdefb;
+}
+.tab:hover{
+  background:#bbdefb;
+}
+.tab.active{
+  background:linear-gradient(135deg,#64b5f6,#ffffff);
+  color:#003;
+  border-bottom:1px solid #fff;
+}
+/* ===== END DASHBOARD TABS ===== */
+    
 </style>
 </head>
 
 <body>
-
+    
+<div class="tabs" id="dashboardTabs">
+  <a class="tab" data-tab="invoice" href="https://linkfinn.github.io/tra-cuu/index.html">Hóa đơn</a>
+  <a class="tab" data-tab="lookup" href="#">Tra cứu XML</a>
+</div>
+    
 <h3>Tải lên nhiều file XML hóa đơn</h3>
 <input type="file" id="xmlFiles" multiple accept=".xml">
 
@@ -451,7 +483,31 @@ Mã CQT: ${MCCQT}<br><br>
  html+=`</div>`;
  document.getElementById("result").innerHTML+=html;
 }
+
+/* =======================
+   DASHBOARD TAB ACTIVE
+======================= */
+(function(){
+  const tabs = document.querySelectorAll('.tab');
+  const params = new URLSearchParams(window.location.search);
+
+  // Mặc định tab hóa đơn
+  let activeTab = 'lookup';
+
+  // Nếu sau này bạn muốn phân tab theo param
+  if(params.get('page')){
+    activeTab = params.get('page');
+  }
+
+  tabs.forEach(t=>{
+    if(t.dataset.tab === activeTab){
+      t.classList.add('active');
+    }
+  });
+})();
+    
 </script>
 
 </body>
 </html>
+
