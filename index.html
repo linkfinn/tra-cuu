@@ -334,7 +334,7 @@ function render(data){
   <td>${r.Checkinfo||''}</td>
   <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
   <td>${FkeyText||''}</td>
-  <td>${SafeLink(r.Linkview, 'xem')}</td>
+  <td>${SafeLink(r.Linkview, 'xem ĐV')}</td>
   `;
     }else{
     tr.innerHTML=`
@@ -346,7 +346,7 @@ function render(data){
   <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
   <td>${FkeyText||''}</td>
   <td>${r.Congtrinh||''}</td>
-  <td>${SafeLink(r.Linkview, 'xem')}</td>
+  <td>${SafeLink(r.Linkview, 'xem HĐ')}</td>
   `;
     }
     tb.appendChild(tr);
@@ -406,3 +406,4 @@ window.onload=load;
 </script>
 </body>
 </html>
+
