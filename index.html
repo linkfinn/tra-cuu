@@ -288,6 +288,16 @@ function load(){
 }
 
 /* =======================
+   LINK NULL (LINK RỖNG => BỎ QUA)
+======================= */
+function SafeLink(url, text='xem file'){
+  if(!url) return '';
+  const u = url.toString().trim();
+  if(!u || u.toLowerCase()==='null') return '';
+  return `<a href="${u}" target="_blank">${text}</a>`;
+}
+
+/* =======================
    RENDER
 ======================= */
 function render(data){
@@ -324,7 +334,7 @@ function render(data){
   <td>${r.Checkinfo||''}</td>
   <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
   <td>${FkeyText||''}</td>
-  <td>${r.Linkview?`<a href="${r.Linkview}" target="_blank">xem</a>`:''}</td>
+  <td>${SafeLink(r.Linkview, 'xem')}</td>
   `;
     }else{
     tr.innerHTML=`
@@ -336,7 +346,7 @@ function render(data){
   <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
   <td>${FkeyText||''}</td>
   <td>${r.Congtrinh||''}</td>
-  <td>${r.Linkview?`<a href="${r.Linkview}" target="_blank">xem</a>`:''}</td>
+  <td>${SafeLink(r.Linkview, 'xem')}</td>
   `;
     }
     tb.appendChild(tr);
@@ -396,6 +406,3 @@ window.onload=load;
 </script>
 </body>
 </html>
-
-
-
