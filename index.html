@@ -380,7 +380,7 @@ function render(data){
     }
     tb.appendChild(tr);
   });
-  document.querySelector('tfoot').style.display = ''; // hiển thị dòng tổng sau khi render xong
+  document.querySelector('tfoot').style.display = 'table-footer-group'; // hiển thị dòng tổng sau khi render xong
   const master = document.getElementById('checkAll');
   if(master) master.disabled = false;
   SumTongtien();
@@ -489,6 +489,7 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
 
 
