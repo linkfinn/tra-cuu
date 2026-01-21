@@ -28,7 +28,7 @@ th{text-align:center;background:#f0f0f0}
 td.number{text-align:right}
 tr.nodata{background:#f8ebf7}
 tbody tr:hover{background:#defaf9}
-tfoot{display:none;} /* Ẩn khi chưa load dữ liệu, hiện lại trong render/
+tfoot{display:none;} /* Ẩn khi chưa load dữ liệu, hiện lại trong render*/
 .controls{margin-bottom:10px;display:flex;gap:10px;align-items:center}
 a{color:inherit;text-decoration:none}
 
@@ -264,7 +264,7 @@ function load(){
 
   title.textContent = y === 'all' ? `${cfg.label} tất cả các năm`  : `${cfg.label} năm ${y}`;
   renderHeader(cfg.group);
-  tb.innerHTML='<tr><td colspan="9">Đang load dữ liệu ...</td></tr>';
+  tb.innerHTML='<tr><td colspan="10">Đang load dữ liệu ...</td></tr>';
 
   fetch(cfg.url).then(r=>r.text()).then(t=>{
     const rows=parseCSV(t);
@@ -489,5 +489,6 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
 
