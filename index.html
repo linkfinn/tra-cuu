@@ -247,7 +247,7 @@ function load(){
   const y=year.value;
   const cfg=CSV_MAP[key];
 
-  title.textContent = y === 'all' ? `${cfg.label} (Tất cả các năm)`  : `${cfg.label} năm ${y}`;
+  title.textContent = y === 'all' ? `${cfg.label} tất cả các năm`  : `${cfg.label} năm ${y}`;
   renderHeader(cfg.group);
   tb.innerHTML='<tr><td colspan="9">Đang load dữ liệu ...</td></tr>';
 
@@ -417,6 +417,7 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
 
 
