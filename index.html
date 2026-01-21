@@ -264,6 +264,15 @@ function load(){
 
   title.textContent = y === 'all' ? `${cfg.label} tất cả các năm`  : `${cfg.label} năm ${y}`;
   renderHeader(cfg.group);
+  // ===== RESET TRẠNG THÁI CŨ =====
+  document.querySelector('tfoot').style.display = 'none';
+  document.getElementById('sumTotal').textContent = '0';
+  const master = document.getElementById('checkAll');
+  if(master){
+    master.checked = true;
+    master.indeterminate = false;
+    master.disabled = true;
+  }
   tb.innerHTML='<tr><td colspan="10">Đang load dữ liệu ...</td></tr>';
 
   fetch(cfg.url).then(r=>r.text()).then(t=>{
@@ -489,6 +498,7 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
 
 
