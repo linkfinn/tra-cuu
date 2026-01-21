@@ -70,6 +70,7 @@ a{color:inherit;text-decoration:none}
 <div class="controls">
   <select id="source"></select>
   <select id="year">
+    <option value="all">Chọn năm</option>
     <option>2023</option>
     <option>2024</option>
     <option>2025</option>
@@ -246,7 +247,7 @@ function load(){
   const y=year.value;
   const cfg=CSV_MAP[key];
 
-  title.textContent=`${cfg.label} năm ${y}`;
+  title.textContent = y === 'all' ? `${cfg.label} (Tất cả các năm)`  : `${cfg.label} năm ${y}`;
   renderHeader(cfg.group);
   tb.innerHTML='<tr><td colspan="9">Đang load dữ liệu ...</td></tr>';
 
@@ -258,7 +259,8 @@ function load(){
     for(let i=4;i<rows.length;i++){
       const r=rows[i];
       const d = r[col.Nlap]; // Lấy giá trị cột "Ngày"
-      if(!d||getYear(d)!==y) continue;
+      if(!d) continue;
+      if(y !== 'all' && getYear(d) !== y) continue;
 
       if(cfg.group==='DV'){
         origin.push({
@@ -415,6 +417,7 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
 
 
