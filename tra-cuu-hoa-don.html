@@ -232,7 +232,9 @@ else if(MSTTCGP==="0311942758") { // Ngô Gia Phát
   }
 
 else if(MSTTCGP==="0306784030") { // CNKN 
-  add(`Chưa có thông tin`);
+  add(`- Mã tra cứu: xem file pdf`);add(`<br>`);
+  add(`- Truy cập `);add(`https://${MSTNBan}.ehoadon.net/look-up-invoice`);add(` sử dụng file XML để tra cứu<br>`);
+  add(`- `);add(`https://${MSTNBan}.ehoadon.net/look-up-invoice?code=${MaTCHdon}`);add(`<br>`);
   }
 
 else if(["0106026495","0106026495-001","0100687474"].includes(MSTTCGP)) { // Minvoice 
@@ -511,3 +513,4 @@ Mã CQT: ${MCCQT}<br><br>
 
 </body>
 </html>
+
