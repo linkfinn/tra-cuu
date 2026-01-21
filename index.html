@@ -85,8 +85,15 @@ a{color:inherit;text-decoration:none}
 <table>
 <thead id="thead"></thead>
 <tbody id="tb">
-<tr><td colspan="9" align="center">Đang load dữ liệu ...</td></tr>
+<tr><td colspan="10" align="center">Đang load dữ liệu ...</td></tr>
 </tbody>
+<tfoot>
+  <tr>
+    <th colspan="3" style="text-align:right">TỔNG</th>
+    <th id="sumTotal" class="number">0</th>
+    <th colspan="6"></th>
+  </tr>
+</tfoot>
 </table>
 
 <script>
@@ -218,8 +225,8 @@ function parseNumber(val){
    HEADER
 ======================= */
 const TABLE_HEADER={
-  DV:['MST-KH-Số hóa đơn','Ngày','Tên khách hàng','Tổng tiền','Trạng thái','Check','Web tra cứu','ID/Fkey','Xem'],
-  DR:['MST-KH-Số hóa đơn','Ngày','Tên khách hàng','Tổng tiền','Trạng thái','Web','ID/Fkey','Công trình','Xem']
+  DV:['MST-KH-Số hóa đơn','Ngày','Tên khách hàng','Tổng tiền','Trạng thái','Check','Web tra cứu','ID/Fkey','Xem','✔'],
+  DR:['MST-KH-Số hóa đơn','Ngày','Tên khách hàng','Tổng tiền','Trạng thái','Web','ID/Fkey','Công trình','Xem','✔']
 };
 
 function renderHeader(group){
@@ -227,7 +234,14 @@ function renderHeader(group){
   const tr=document.createElement('tr');
   TABLE_HEADER[group].forEach(t=>{
     const th=document.createElement('th');
-    th.textContent=t;
+    if(t === '✔'){
+    th.innerHTML = `
+    <input type="checkbox" id="checkAll" checked
+      onchange="toggleAll(this)">
+    `;
+    } else {
+    th.textContent = t;
+    }
     tr.appendChild(th);
   });
   thead.appendChild(tr);
@@ -340,28 +354,47 @@ function render(data){
   <td>${r.Noido||''}</td>
   <td>${r.Nlap||''}</td>
   <td>${r.TenKH||''}</td>
-  <td class="number">${r.Tongtien.toLocaleString('en-US')}</td>
+  <td class="number" data-money="${r.Tongtien}">${r.Tongtien.toLocaleString('en-US')}</td>
   <td>${r.Trangthai||''}</td>
   <td>${r.Checkinfo||''}</td>
   <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
   <td>${FkeyText||''}</td>
   <td>${SafeLink(r.Linkview, 'xem')}</td>
+  <td><input type="checkbox" class="row-check" checked onchange="SumTongtien()"></td>
   `;
     }else{
     tr.innerHTML=`
   <td>${r.Noido||''}</td>
   <td>${r.Nlap||''}</td>
   <td>${r.TenKH||''}</td>
-  <td class="number">${r.Tongtien.toLocaleString('en-US')}</td>
+  <td class="number" data-money="${r.Tongtien}">${r.Tongtien.toLocaleString('en-US')}</td>
   <td>${r.Trangthai||''}</td>
   <td>${r.LinkTC?`<a href="${r.LinkTC}" target="_blank">${r.WebTC}</a>`:(r.WebTC||'')}</td>
   <td>${FkeyText||''}</td>
   <td>${r.Congtrinh||''}</td>
   <td>${SafeLink(r.Linkview, 'xem')}</td>
+  <td><input type="checkbox" class="row-check" checked onchange="SumTongtien()"></td>
   `;
     }
     tb.appendChild(tr);
   });
+  SumTongtien();
+}
+
+/* =======================
+   FILTER
+======================= */
+function SumTongtien(){
+  let sum = 0;
+  document.querySelectorAll('#tb tr').forEach(tr=>{
+    const cb = tr.querySelector('.row-check');
+    if(cb && cb.checked){
+      const moneyCell = tr.querySelector('[data-money]');
+      sum += Number(moneyCell.dataset.money || 0);
+    }
+  });
+  document.getElementById('sumTotal').textContent =
+    sum.toLocaleString('en-US');
 }
 
 /* =======================
@@ -417,6 +450,7 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
 
 
