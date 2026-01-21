@@ -237,7 +237,7 @@ function renderHeader(group){
     const th=document.createElement('th');
     if(t === '✔'){
     th.innerHTML = `
-    <input type="checkbox" id="checkAll" checked
+    <input type="checkbox" id="checkAll" checked checked disabled
       onchange="SumTongtien(true)">
     `;
     } else {
@@ -381,6 +381,8 @@ function render(data){
     tb.appendChild(tr);
   });
   document.querySelector('tfoot').style.display = ''; // hiển thị dòng tổng sau khi render xong
+  const master = document.getElementById('checkAll');
+  if(master) master.disabled = false;
   SumTongtien();
 }
 
@@ -487,4 +489,5 @@ window.onload=load;
 </script>
 </body>
 </html>
+
 
