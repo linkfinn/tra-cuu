@@ -139,10 +139,10 @@ function parseXML(txt,name){
  const add=l=>links.push(l);
 
 if (MSTTCGP === "0101243150") { // Misa
-  add(`Mã tra cứu: ${IDHDon1}`);
-  add(`https://www.meinvoice.vn/tra-cuu/?sc=${IDHDon1}`);
-  add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=pdf&Code=${IDHDon1}`);
-  add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=xml&Code=${IDHDon1}`);
+  add(`- Mã tra cứu: ${IDHDon1}`);add(`<br>`);
+  add(`- `);add(`https://www.meinvoice.vn/tra-cuu/?sc=${IDHDon1}`);add(`<br>`);
+  add(`- `);add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=pdf&Code=${IDHDon1}`);add(`<br>`);
+  add(`- `);add(`https://www.meinvoice.vn/tra-cuu/DownloadHandler.ashx?Type=xml&Code=${IDHDon1}`);add(`<br>`);
 } 
 
 else if (MSTTCGP === "0101360697") { // BKAV
@@ -452,7 +452,7 @@ else if(MSTTCGP==="0104614692") { // IDOC
   }
 
 else if(MSTTCGP==="0106777621") { // NDTV
-  add(`Mã tra cứu: ${MaTCHdon}`);
+  add(`- Mã tra cứu: ${MaTCHdon}`);
   add(`https://hoadontvan.com/TraCuu?invoiceCode=${MaTCHdon}`);
   }
 
@@ -473,9 +473,9 @@ Mã CQT: ${MCCQT}<br><br>
  } else {
   links.forEach(l => {
   if (l.startsWith("http")) {
-    html += `- <a href="${l}" target="_blank">${l}</a><br>`;
+    html += `<a href="${l}" target="_blank">${l}</a>`;
   } else {
-    html += `- ${l}<br>`;
+    html += `${l}`;
   }
  });
   if(!MaTCHdon && !["0101243150","0101360697"].includes(MSTTCGP))
@@ -486,9 +486,7 @@ Mã CQT: ${MCCQT}<br><br>
  document.getElementById("result").innerHTML+=html;
 }
 
-/* =======================
-   DASHBOARD TAB ACTIVE
-======================= */
+/* ===DASHBOARD TAB ACTIVE=== */
 (function(){
   const tabs = document.querySelectorAll('.tab');
   const params = new URLSearchParams(window.location.search);
@@ -507,11 +505,9 @@ Mã CQT: ${MCCQT}<br><br>
     }
   });
 })();
+/* ===END DASHBOARD TAB ACTIVE=== */
     
 </script>
 
 </body>
 </html>
-
-
-
