@@ -151,22 +151,64 @@ else if (MSTTCGP === "0101360697") { // BKAV
 
 else if (MSTTCGP === "VNPT_BACK" ||["0100684378","0108212803"].includes(MSTTCGP)) { // VNPT
   // VNPT xăng dầu
-  if (["03401254649",
+  if (["0300555450","0300555450-001",
+       "03401254649",
+       "0400101683-003",
        "04100259821",
-       "1200100370",
+       "0600018898",
+       "1100108351",
+       "1200100370","1200100370-062",
+       "1300118981",
        "1400103562",
-       "1800158559-020",
-       "2000109850"].includes(MSTNBan)) {
+       "1500207131",
+       "1600184590",
+       "1800158559","1800158559-001","1800158559-020","1800158559-034",
+       "2000109850",
+       "3401254649",
+       "3500102573-019",
+       "3600247325",
+       "3700146031",
+       "4100259821",
+       "4200240380","4200240380-011",
+       "4300298507"].includes(MSTNBan)) {
     add(`- Mã tra cứu: ${MaTCHdon}`);add(`<br>`);
     add(`- `);add(`https://hoadon.petrolimex.com.vn/?strFkey=${MaTCHdon}`);add(`<br>`);
   } else {
     // VNPT thay đổi tên gợi nhớ
     const map = {
-      "0302309845-048":"dienmaycholonvtu",
+      "0302309845-001":"dienmaycholoncto","0302309845-048":"dienmaycholonvtu",
+      "0100109120-007":"vrcc8","0100109120-029":"dangkiem5003v","0100109120-030":"dangkiem5005v","0100109120-034":"dangkiem5004v","0100109120-052":"ccdangkiem16",
+      "0101573021":"vppr",
+      "0106869738-005":"hcm","0106869738-023":"dtp","0106869738-027":"stg",
+      "0107307812":"nasco","0107307812-002":"nascomiennam",
+      "0107867370":"hangkhongtreviet",
+      "0300710949":"lottehotelsaigon",
+      "0302309845":"dienmaycholon",
+      "0303522206":"smcdt",
+      "0306387178":"congchungbenthanh",
+      "0307979603":"cityauto",
       "0311028311":"vietceramics",
+      "0314071202":"vieclam24h",
+      "0315087043":"quanutut",
+      "0315161593-011":"mlcsoctrang",
+      "0315446937-001":"ttdk5015d",
       "0315679836":"tinogroup",
       "0317860332":"google",
-      "2200730800":"cayxangtuxe"
+      "0401593526":"vdk",
+      "0700266943":"ktvd",
+      "0700266943-001":"vaidiakythuatlongan",
+      "1200253539":"ctyxdchauthanh",
+      "1201617926":"ctylxphuanhtgg",
+      "1400292207":"ttdkdt",
+      "1801071438":"hamacobt",
+      "1801310132":"saigonotocantho",
+      "2200107297":"soctrangwaco",
+      "2200730800":"cayxangtuxe",
+      "4000478178":"mlctamky",
+      "4100455801":"vantinhbdh",
+      "4200402578":"yasakasaigonnhatrang",
+      "4201601110-005":"suntaxibdh",
+      "6300147879-002":"dangkiem9502d"
     };
     const sub = map[MSTNBan] || MSTNBan;
     add(`- Mã tra cứu: ${MCCQT}`);add(`<br>`);
@@ -513,4 +555,5 @@ Mã CQT: ${MCCQT}<br><br>
 
 </body>
 </html>
+
 
