@@ -71,11 +71,6 @@ a{text-decoration:none}
 <div class="controls">
   <select id="source"></select>
   <select id="year">
-    <option value="all">Chọn năm</option>
-    <option>2023</option>
-    <option>2024</option>
-    <option>2025</option>
-    <option selected>2026</option>
   </select>
   <button onclick="load()">Lấy dữ liệu</button>
   <input id="search" placeholder="Tìm kiếm..." onkeyup="filter()">
@@ -252,6 +247,23 @@ function renderHeader(group){
    LOAD DATA
 ======================= */
 const year=document.getElementById('year');
+
+/* === INIT YEAR SELECT (AUTO)=== */
+(function initYearSelect(){
+  const currentYear = new Date().getFullYear();
+  const startYear = 2023; // có thể đổi nếu muốn
+
+  year.innerHTML = `<option value="all">Chọn năm</option>`;
+
+  for(let y = startYear; y <= currentYear; y++){
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    if(y === currentYear) opt.selected = true;
+    year.appendChild(opt);
+  }
+})();
+
 const title=document.getElementById('title');
 const tb=document.getElementById('tb');
 const search=document.getElementById('search');
@@ -498,10 +510,3 @@ window.onload=load;
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
